@@ -1,4 +1,4 @@
-/* Base styles (Mobile-first) */
+/* Base styles (Mobile-first: 320px - 771px) */
 html {
     scroll-behavior: smooth;
 }
@@ -7,14 +7,14 @@ body {
     background-color: #dedede;
     padding: 5px;
     margin: 15px;
-    font-size: 25px;
+    font-size: clamp(16px, 4vw, 25px); /* Responsive font size */
     font-family: Arial, sans-serif;
 }
 
 h1 {
     text-align: center;
     font-family: Arial, sans-serif;
-    font-size: 1.95em;
+    font-size: clamp(1.5em, 5vw, 1.95em);
 }
 
 h2 {
@@ -27,6 +27,8 @@ li {
 
 img {
     width: 100%;
+    height: auto;
+    display: block;
 }
 
 .label {
@@ -34,11 +36,12 @@ img {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-/* Add grid for mobile - one column */
+/* Mobile Grid (320px - 771px) */
 .grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 15px;
+    padding: 10px;
 }
 
 figure {
@@ -46,46 +49,78 @@ figure {
     padding: 10px;
     background-color: white;
     border: 5px solid blue;
+    transition: all 0.3s ease;
 }
 
-/* Tablet view (772px) */
-@media screen and (min-width: 772px) {
+/* Tablet View (772px - 991px) */
+@media screen and (min-width: 772px) and (max-width: 991px) {
+    body {
+        padding: 15px;
+        margin: 20px;
+    }
+
     .grid {
-        grid-template-columns: 1fr 1fr;  /* Two column grid */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
 
     figure {
-        border-radius: 50%;  /* Circular shape */
+        border-radius: 15px;
+        padding: 15px;
     }
 
     .grid figure:last-child {
-        grid-column: span 2;  /* Last figure spans both columns */
+        grid-column: span 2;
     }
 }
 
-/* Large screen view (992px) */
+/* Desktop View (992px+) */
 @media screen and (min-width: 992px) {
-    figure {
-        border-radius: 0;  /* Remove circular shape */
+    body {
+        padding: 20px;
+        margin: 30px;
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    .grid figure:nth-child(3n) {
-        grid-column: span 2;  /* Every third figure spans both columns */
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        padding: 20px;
+    }
+
+    figure {
+        border-radius: 8px;
+        padding: 20px;
+    }
+
+    figure:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 }
 
-/* Prefers-reduced-motion */
+/* Accessibility & User Preferences */
 @media (prefers-reduced-motion: reduce) {
     html {
-        scroll-behavior: auto;  /* Remove smooth scrolling */
+        scroll-behavior: auto;
+    }
+    
+    figure {
+        transition: none;
     }
 }
 
 /* Dark color scheme */
 @media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+    }
+
     figure {
-        background-color: #333333;  /* Dark background color */
-        color: #FFE066;  /* Yellow-ish font color */
-        border-color: #000000;  /* Black border */
+        background-color: #333333;
+        color: #FFE066;
+        border-color: #444444;
     }
 }
